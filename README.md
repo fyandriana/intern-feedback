@@ -122,12 +122,3 @@ curl -i "http://localhost:3000/api/feedback?limit=10&offset=0"
 ```
 
 ---
-
-## Next steps
-1. Implement DB schema & connection (`db/schema.sql`, `server/src/db/connection.js`).
-2. Scaffold Express server with CORS and `/health` route.
-3. Implement `POST /api/feedback`, then `GET /api/feedback`.
-4. Build React client (form + admin table).
-
-> Branch suggestion for this doc: `docs/api-contract`  
-> Commit message: `docs(api): define feedback API`
