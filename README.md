@@ -53,9 +53,6 @@ Create a feedback entry.
 { "error": "Unexpected error" }
 ```
 
-<!-- **Notes**
-- Server may log the full payload; response keeps it minimal (id + created_at).
--->
 ---
 
 ### GET /api/feedback
@@ -95,7 +92,7 @@ CREATE TABLE IF NOT EXISTS feedback (
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   message TEXT NOT NULL,
-  created_at DATETIME NOT NULL DEFAULT (datetime('now'))
+  created_at DATETIME NOT NULL DEFAULT (CURRENT_TIMESTAMP)
 );
 ```
 
@@ -122,3 +119,63 @@ curl -i "http://localhost:3000/api/feedback?limit=10&offset=0"
 ```
 
 ---
+
+# Database Setup
+
+This project uses **SQLite** for persistence.  
+All SQL is kept in `db/schema.sql` (for schema) and `db/seed.sql` (for sample data).
+
+---
+
+## 1. Install dependencies
+```bash
+npm install
+```
+
+This pulls in [`better-sqlite3`](https://github.com/WiseLibs/better-sqlite3), which the init/seed scripts use.
+
+---
+
+## 2. Initialize the database
+```bash
+npm run db:init
+```
+
+- Creates `db/app.db` (if missing).  
+- Applies all SQL statements from `db/schema.sql`.  
+- Sets `foreign_keys = ON` and `journal_mode = WAL`.  
+- Creates the `feedback` table and indexes.
+
+---
+
+## 3. Seed the database (optional)
+```bash
+npm run db:seed
+```
+
+- Executes `db/seed.sql` against `db/app.db`.  
+- Inserts sample feedback rows you can view in the admin panel or via SQLiteStudio.
+
+---
+
+## 4. Reset the database (dangerous – deletes everything)
+```bash
+npm run db:reset
+```
+
+- Removes the existing `db/app.db`.  
+- Runs `db:init` and `db:seed` again.  
+- Useful during development if you want a fresh start.
+
+---
+
+## 5. Inspect with SQLiteStudio
+1. Open [SQLiteStudio](https://sqlitestudio.pl/) (v3.4.8 or later).  
+2. Go to **Database → Add a database**.  
+3. Choose the file: `db/app.db`.  
+4. You can now view tables (`feedback`) and data, or run queries.
+
+---
+
+✅ That’s it! Your database is ready for the backend API to connect.
+
