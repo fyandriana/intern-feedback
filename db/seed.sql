@@ -19,8 +19,6 @@ INSERT INTO feedback (name, email, message) VALUES
     ('Roberto D''Angelo', 'roberto.dangelo@it.it', 'Italian user here—works fine 👍'),
     ('Emoji Tester', 'emoji@test.com', 'Emoji test 🌿🌱💚'),
     ('Edge Case', 'edge@case.io', 'DROP TABLE feedback; -- should be treated as text, not SQL'),
-    ('Long Message', 'long@msg.com',
-     'This is a longer message to simulate real feedback. I tried submitting a note from my phone and the page refreshed without a toast. '
-         'Also, it would be helpful to keep the name/email values in the form after an error so I don''t have to retype them.' );
+    ('Long Message', 'long@msg.com','This is a longer message to simulate real feedback. I tried submitting a note from my phone and the page refreshed without a toast. Also, it would be helpful to keep the name/email values in the form after an error so I don''t have to retype them.' );
 
 COMMIT;
