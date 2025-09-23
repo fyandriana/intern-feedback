@@ -1,13 +1,9 @@
 {
-  "name": "feedback-api",
+  "name": "server",
   "version": "1.0.0",
-  "private": true,
   "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "db:init": "node src/db/init.mjs",
-    "db:seed": "node src/db/seed.mjs",
-    "db:reset": "rimraf src/db/app.db src/db/app.db-wal src/db/app.db-shm && node src/db/init.mjs && node src/db/seed.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,8 +13,7 @@
     "better-sqlite3": "^12.4.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
-    "express": "^5.1.0",
-    "nodemon": "^3.1.10"
+    "express": "^5.1.0"
   },
   "devDependencies": {
     "eslint": "^9.36.0",
