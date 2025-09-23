@@ -1,7 +1,11 @@
+.idea
+*.md
+!README.md
+
 # Environment
-.env.local
 .env
 *.env
+.env.local
 
 # SQLite databases (any folder)
 *.db
