@@ -4,7 +4,7 @@ import path from "node:path";
 import Database from "better-sqlite3";
 
 const ROOT = process.cwd();
-const DB_DIR = path.join(ROOT, "db");
+const DB_DIR = path.join(ROOT, "src/db");
 const DB_PATH = path.join(DB_DIR, "feedback.db");
 const SCHEMA_PATH = path.join(DB_DIR, "schema.sql");
 
