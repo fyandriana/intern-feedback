@@ -4,6 +4,7 @@
   "private": true,
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "db:init": "node src/db/init.mjs",
