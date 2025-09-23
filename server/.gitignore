@@ -2,5 +2,6 @@
 *.md
 !README.md
 node_modules
-server/node_modules
-db
+src/db
+.env.local
+src/db/*.db
