@@ -1,9 +1,9 @@
 {
   "type": "module",
   "scripts": {
-    "db:init": "node db/init.mjs",
-    "db:seed": "node db/seed.mjs",
-    "db:reset": "rimraf db/app.db db/app.db-wal db/app.db-shm && node db/init.mjs && node db/seed.mjs"
+    "db:init": "node server/src/db/init.mjs",
+    "db:seed": "node server/src/db/seed.mjs",
+    "db:reset": "rimraf server/src/db/feedback.db server/src/db/feedback.db-wal server/src/db/feedback.db-shm && node server/src/db/init.mjs && node server/src/db/seed.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^9.0.0"
