@@ -1,7 +1,21 @@
 .idea
 *.md
 !README.md
-node_modules
-src/db
+
+# Environment
+.env
+*.env
 .env.local
-src/db/*.db
+
+# SQLite databases (any folder)
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Node + logs
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
