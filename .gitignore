@@ -1,5 +1,48 @@
-.idea
+# ---- OS / IDE (PhpStorm) ----
+.DS_Store
+.idea          # ignore JetBrains project files
+*.iml
+
+#ignore *.md except readme
 *.md
 !README.md
-node_modules
-server/node_modules
+
+# ---- Logs ----
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ---- Node ----
+node_modules/
+
+# ---- Frontend / Vite ----
+client/dist/
+client/dist-ssr/
+*.local
+
+# ---- Backend builds (if any) ----
+server/dist/
+
+# ---- Environment files (anywhere) ----
+*.env
+*.env.local
+# !.env.example   # uncomment if you want to keep a tracked example env
+
+# ---- SQLite databases (any folder) ----
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# ---- Legacy project/Windows editors ----
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.idea/
