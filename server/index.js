@@ -4,7 +4,7 @@ import Database from "better-sqlite3";
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { DB_PATH, run, list, getDb } from './src/db/connection.js';
+import { DB_PATH, run, list, getDb, pingDb } from './src/db/connection.js';
 
 const PORT = process.env.PORT || 3001;
 const app = express();
