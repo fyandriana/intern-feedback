@@ -3,7 +3,7 @@
 This module implements a simple feedback system
 
 - **Stack**: Node.js/Express, SQLite, React
-- **Folders**: `db/`, `server/`, `client/`
+- **Folders**: `server/`, `client/`, `server/src/db`
 - **Goal**: Users can submit feedback (name, email, message); an admin view lists recent feedback.
 
 ---
