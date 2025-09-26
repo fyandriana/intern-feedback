@@ -44,10 +44,6 @@ Create a feedback entry.
 ```json
 { "error": "ValidationError", "details": ["email invalid"] }
 ```
-- `415 Unsupported Media Type`
-```json
-{ "error": "Expected application/json" }
-```
 - `500 Internal Server Error`
 ```json
 { "error": "Unexpected error" }
@@ -109,13 +105,13 @@ CREATE TABLE IF NOT EXISTS feedback (
 ## Quick curl tests
 ```bash
 # Health (once server scaffold exists)
-curl -i http://localhost:3000/health
+curl -i http://localhost:3001/api/health
 
 # Create feedback
-curl -i -X POST http://localhost:3000/api/feedback   -H "Content-Type: application/json"   -d '{"name":"Fy","email":"fy@example.com","message":"Hi"}'
+curl -i -X POST http://localhost:3001/api/feedback   -H "Content-Type: application/json"   -d '{"name":"Fy","email":"fy@example.com","message":"Hi"}'
 
 # List feedback
-curl -i "http://localhost:3000/api/feedback?limit=10&offset=0"
+curl -i "http://localhost:3001/api/feedback?limit=10&offset=0"
 ```
 
 ---
@@ -123,7 +119,7 @@ curl -i "http://localhost:3000/api/feedback?limit=10&offset=0"
 # Database Setup
 
 This project uses **SQLite** for persistence.  
-All SQL is kept in `db/schema.sql` (for schema) and `db/seed.sql` (for sample data).
+All SQL is kept in `server/src/db/schema.sql` (for schema) and `server/src/db/seed.sql` (for sample data).
 
 ---
 
@@ -141,8 +137,8 @@ This pulls in [`better-sqlite3`](https://github.com/WiseLibs/better-sqlite3), wh
 npm run db:init
 ```
 
-- Creates `db/app.db` (if missing).  
-- Applies all SQL statements from `db/schema.sql`.  
+- Creates `server/src/db/feedback.db` (if missing).  
+- Applies all SQL statements from `server/src/db/schema.sql`.  
 - Sets `foreign_keys = ON` and `journal_mode = WAL`.  
 - Creates the `feedback` table and indexes.
 
@@ -153,7 +149,7 @@ npm run db:init
 npm run db:seed
 ```
 
-- Executes `db/seed.sql` against `db/app.db`.  
+- Executes `server/src/db/seed.sql` against `server/src/db/feedback.db`.  
 - Inserts sample feedback rows you can view in the admin panel or via SQLiteStudio.
 
 ---
@@ -163,7 +159,7 @@ npm run db:seed
 npm run db:reset
 ```
 
-- Removes the existing `db/app.db`.  
+- Removes the existing `server/src/db/feedback.db`.  
 - Runs `db:init` and `db:seed` again.  
 - Useful during development if you want a fresh start.
 
@@ -172,10 +168,54 @@ npm run db:reset
 ## 5. Inspect with SQLiteStudio
 1. Open [SQLiteStudio](https://sqlitestudio.pl/) (v3.4.8 or later).  
 2. Go to **Database → Add a database**.  
-3. Choose the file: `db/app.db`.  
+3. Choose the file: `server/src/db/feedback.db`.  
 4. You can now view tables (`feedback`) and data, or run queries.
 
 ---
 
 ✅ That’s it! Your database is ready for the backend API to connect.
 
+
+# How to Test the API with Postman
+
+This project provides a Postman collection and environment to make testing the feedback API easy.
+## 1. Import Postman Files
+- Open Postman.
+- Click **Import**.
+- Select the following files from the `postman/` folder:
+    - `feedback.collection.json`
+    - `feedback.env.json`
+
+## 2. Select Environment
+- In the top-right environment dropdown, choose **Local**.
+
+## 3. Verify Environment Variables
+- `base_url` → defaults to `http://localhost:3001`
+- `limit` → defaults to `5`
+
+Adjust if your API runs on a different port.
+
+## 4. Run Requests
+The collection includes:
+- **GET** `{{base_url}}/api/health` → health check
+- **POST** `{{base_url}}/api/feedback` → create new feedback
+- **GET** `{{base_url}}/api/feedback?limit={{limit}}` → list feedback
+
+## 5. Run Tests
+- Open the **Collection Runner** in Postman.
+- Select **Intern Feedback API** and environment **Local**.
+- Click **Run**.
+- Postman will execute all requests and show test results.
+
+---
+
+> ✅ Ensure your API server is running (e.g., `npm run start` in `/server`) before executing the Postman tests.
+
+# Test Api using command under server folder
+```bash
+# test api
+npm run test:api
+
+# generate html report
+npm run test:api:html
+```

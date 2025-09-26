@@ -1,0 +1,93 @@
+{
+  "info": {
+    "name": "Intern Feedback API",
+    "_postman_id": "a1111aaa-2222-bbbb-3333-collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"JSON body\", () => pm.response.to.be.json);",
+              "pm.test(\"ok:true\", () => pm.expect(pm.response.json().ok).to.eql(true));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create feedback",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{base_url}}/api/feedback",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"message\": \"Hello from Postman at {{$timestamp}}\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200/201\", () => pm.expect([200,201]).to.include(pm.response.code));",
+              "pm.test(\"JSON body\", () => pm.response.to.be.json);",
+              "const json = pm.response.json();",
+              "[\"id\",\"name\",\"email\",\"message\",\"created_at\"].forEach(k => pm.test(`has ${k}`, () => pm.expect(json).to.have.property(k)));",
+              "pm.environment.set(\"feedback_id\", json.id);",
+              "pm.environment.set(\"feedback_email\", json.email);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "List feedback",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/feedback?limit={{limit}}",
+          "host": [ "{{base_url}}" ],
+          "path": [ "api", "feedback" ],
+          "query": [
+            { "key": "limit", "value": "{{limit}}" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"JSON body\", () => pm.response.to.be.json);",
+              "const body = pm.response.json();",
+              "const items = Array.isArray(body) ? body : (body.items || []);",
+              "pm.test(\"is array\", () => pm.expect(items).to.be.an(\"array\"));",
+              "pm.test(\"respects limit\", () => pm.expect(items.length).to.be.at.most(parseInt(pm.environment.get(\"limit\") || \"5\", 10)));",
+              "if (items.length) {",
+              "  const r = items[0];",
+              "  [\"id\",\"name\",\"email\",\"message\",\"created_at\"].forEach(k => pm.test(`item has ${k}`, () => pm.expect(r).to.have.property(k)));",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+}
