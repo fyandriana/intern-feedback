@@ -108,3 +108,8 @@ export function tx(fn) {
     const db = getDb();
     return db.transaction(() => fn(db))();
 }
+/** for db test */
+export function pingDb() {
+    const db = getDb();
+    return db.prepare('SELECT 1 AS ok, sqlite_version() AS sqlite_version').get();
+}
