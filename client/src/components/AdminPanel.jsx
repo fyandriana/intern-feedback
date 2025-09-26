@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { listFeedback } from '../api';
+import Modal from './Modal.jsx';
 
 function downloadCSV(rows) {
   if (!rows?.length) return;
@@ -18,6 +19,7 @@ function downloadCSV(rows) {
   URL.revokeObjectURL(url);
 }
 
+
 export default function AdminPanel() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,7 +27,15 @@ export default function AdminPanel() {
   const [limit, setLimit] = useState(50);
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState({ key: 'created_at', dir: 'desc' });
+  const [selected, setSelected] = useState(null);
+  const [open, setOpen] = useState(false);
 
+ // const onView = (r) => { setSelected(r); setOpen(true); };
+
+  function viewRecord(r) {
+    setSelected(r);
+    setOpen(true);
+  }
   async function load() {
     try {
       setLoading(true);
@@ -130,23 +140,36 @@ export default function AdminPanel() {
                 <td>{r.name}</td>
                 <td>
                   {r.email}
-                  <button
-                    title="Copy email"
-                    onClick={() => navigator.clipboard?.writeText(r.email)}
-                    style={{ marginLeft: 8 }}
-                  >
-                    Copy
-                  </button>
                 </td>
                 <td style={{ maxWidth: 420, whiteSpace: 'pre-wrap' }}>{r.message}</td>
                 <td>{r.created_at ? new Date(r.created_at).toLocaleString() : ''}</td>
                 <td>
-                  <button onClick={() => alert(JSON.stringify(r, null, 2))}>View</button>
+                  <button onClick={() => viewRecord(r)}>View</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
+        <Modal open={open} title={selected ? `Feedback #${selected.id} | ${selected.created_at ? new Date(selected.created_at).toLocaleString() : ""}` : "Feedback details"} onClose={() => setOpen(false)}>
+          {selected && (
+              <div className="feedback-details">
+
+                <ul>
+                  <li>
+                    Name: {selected.name}
+                  </li>
+                  <li>
+                    Email: {selected.email}
+                  </li>
+                  <li>
+                    Message: <br/>
+                    {selected.message}
+                  </li>
+                </ul>
+              </div>
+          )}
+        </Modal>
       </div>
     </div>
   );

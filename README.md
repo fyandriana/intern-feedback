@@ -11,9 +11,9 @@ This module implements a simple feedback system
 ## API Contract
 
 ### Base
-- Base URL (dev): `http://localhost:3000`
+- Base URL (dev): `http://localhost:3001`
 - All requests/responses are JSON (`Content-Type: application/json`).
-- CORS: allow your React dev origin (e.g., `http://localhost:5173` for Vite or `http://localhost:3000` for CRA).
+- CORS: allow your React dev origin (e.g., `http://localhost:5173` for Vite or `http://localhost:3001` for CRA).
 
 ---
 
@@ -25,8 +25,8 @@ Create a feedback entry.
 - Body:
 ```json
 {
-  "name": "Fy Andrianarison",
-  "email": "fy@example.com",
+  "name": "Bob Junior",
+  "email": "user@example.com",
   "message": "Loving the app!"
 }
 ```
