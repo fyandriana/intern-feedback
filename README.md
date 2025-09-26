@@ -65,8 +65,8 @@ Fetch recent feedback entries (for admin table).
 [
   {
     "id": 42,
-    "name": "Fy Andrianarison",
-    "email": "fy@example.com",
+    "name": "Bob Junior",
+    "email": "user@example.com",
     "message": "Loving the app!",
     "created_at": "2025-09-19T15:04:05.000Z"
   }
