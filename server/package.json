@@ -11,6 +11,8 @@
     "db:seed": "node src/db/seed.mjs",
     "db:reset": "rimraf src/db/app.db src/db/app.db-wal src/db/app.db-shm && node src/db/init.mjs && node src/db/seed.mjs",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:api": "newman run ../postman/feedback.collection.json -e ../postman/feedback.env.json",
+    "test:api:html": "newman run ../postman/feedback.collection.json -e ../postman/feedback.env.json -r htmlextra --reporter-htmlextra-export ../newman/report.html",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -26,6 +28,8 @@
   "devDependencies": {
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
+    "newman": "^6.2.1",
+    "newman-reporter-htmlextra": "^1.23.1",
     "prettier": "^3.6.2"
   }
 }
