@@ -10,7 +10,9 @@
     "db:init": "node src/db/init.mjs",
     "db:seed": "node src/db/seed.mjs",
     "db:reset": "rimraf src/db/app.db src/db/app.db-wal src/db/app.db-shm && node src/db/init.mjs && node src/db/seed.mjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [],
   "author": "",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.6.2"
   }
 }
